@@ -23,7 +23,8 @@ public class GameView {
 	
 	public void playScreen() {
 		System.out.println("==================================================\n");
-		System.out.println("\t\t카드를 뽑아주세요\n");
+		System.out.println("\t\t딜러가 카드를 돌렸습니다"); 
+		System.out.println("\t\t받은 카드 확인\n"); //05.23 블랙잭 룰에 맞게 받은 카드로 바꿈
 		System.out.println("\t\t   [Enter]\n");
 		System.out.println("==================================================\n");
 	}
