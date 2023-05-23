@@ -12,6 +12,7 @@ public class Test_Main {
 //		bb.doubleDown();
 		bb.Insurance();
 		System.out.println("수엽");
+		System.out.println("맛점");
 	}
 
 }
