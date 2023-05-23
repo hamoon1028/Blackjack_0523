@@ -11,7 +11,7 @@ public class Test_Main {
 //		bb.firstBet();	
 //		bb.doubleDown();
 		bb.Insurance();
-		
+		System.out.println("수엽");
 	}
 
 }
