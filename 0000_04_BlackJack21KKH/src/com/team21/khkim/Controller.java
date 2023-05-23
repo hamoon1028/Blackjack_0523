@@ -45,18 +45,6 @@ public class Controller {
 		screen.betScreen(money.getMoney());
 
 		input = scan.input(1000, money.getMoney());
-		// //배팅금액 예외처리
-		// while (true) {
-		// // 배팅값 입력, 시드머니 차감
-		// try {
-		// input = scan.scanInt();
-		// } catch (InputMismatchException e) {
-		// continue;
-		// }
-		// if(input%1000 == 0 && input != 0) {
-		// break;
-		// }
-		// }
 
 		money.firstBet(input);
 		saveFirstBet = money.getBetMoney(); // 초기 배팅값 저장(여러번 스플릿 할 경우 초기 배팅값 필요)
@@ -238,7 +226,7 @@ public class Controller {
 	public int splitCheck() {
 		int input = 0;
 		screen.splitCheckScreen();
-		input = scan.scanInt();
+		input = scan.input(1,2); //05.23 범위 예외처리
 		return input;
 	}
 
