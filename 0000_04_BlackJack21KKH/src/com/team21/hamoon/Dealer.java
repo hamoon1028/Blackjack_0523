@@ -18,9 +18,6 @@ public class Dealer extends HandImpl{
 		return dealerCard;
 	}
 	
-	public void setDealerCard(List<Card> dealerCard) {
-		this.dealerCard = dealerCard;
-	}
 
 	public Card sortCard() {
 		if(isAce()) {
