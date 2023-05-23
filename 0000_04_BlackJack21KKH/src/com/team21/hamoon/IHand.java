@@ -41,8 +41,8 @@ public interface IHand {
 	    return sum;
 	}
 	
-	default void resetCard(List<Card> eachList) {
-		eachList.removeAll(eachList);
-	}
+//	default void resetCard(List<Card> eachList) {
+//		eachList.removeAll(eachList);
+//	}
 	
 }
