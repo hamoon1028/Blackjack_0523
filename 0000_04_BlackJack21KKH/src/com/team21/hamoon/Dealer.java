@@ -31,7 +31,7 @@ public class Dealer extends HandImpl{
 		return dealerCard.get(0);
 	}
 	
-	public boolean isAce() {
+	private boolean isAce() {
 		Card idx1 = dealerCard.get(1);
 		String cardNumber2 = idx1.getNumber().toString();
 		return cardNumber2.equals("A");
