@@ -200,10 +200,16 @@ public class Controller {
 	public void insuranceCheck(List<Card> dCard) {
 		input = 0;
 
-		if (gc.hasAceCard(dCard) == true) {
+		if (hasAceCard(dCard)) { //05.23 아래 메소드로 수정
 			screen.insureanceCheckScreen();
 			input = scan.scanInt();
 		}
+	}
+	
+	private boolean hasAceCard(List<Card> dCard) { //05.23 GameController 메소드를 여기로.
+		Card idx = dCard.get(0);
+		String cardNumber2 = idx.getNumber().toString();
+		return cardNumber2.equals("A");
 	}
 
 	public void checkInsuranceProcess() {
