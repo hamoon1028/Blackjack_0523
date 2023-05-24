@@ -4,6 +4,7 @@ import java.util.Objects;
 
 /**
  * 모양과 숫자를 랜덤으로 조합하여 카드 한 장을 만들어냄
+ * @author MKJeon
  */
 public class Card {
 

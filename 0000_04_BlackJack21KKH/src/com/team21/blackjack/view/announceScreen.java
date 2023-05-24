@@ -2,13 +2,7 @@ package com.team21.blackjack.view;
 
 public class announceScreen {
 
-	public void issueChk() {
-		System.out.println("==================================================\n");
-		System.out.println("\t\t딜러의 패에 Ace 카드는 없습니다. \n");
-		System.out.println("\t\t  일반적인 게임이 진행됩니다 \n");
-		System.out.println("==================================================\n");
-	}
-	
+
 	public void firstScreen() {
 		System.out.println("==================================================\n");
 		System.out.println("\t\t Black Jack 21\n");
