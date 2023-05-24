@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Player_Split extends HandImpl{
-	public List<Card> splitCard = new ArrayList<Card>();
+	private List<Card> splitCard = new ArrayList<Card>();
 		
 	@Override
 	public void drawCard() {
