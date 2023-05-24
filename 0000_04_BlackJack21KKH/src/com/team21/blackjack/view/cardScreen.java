@@ -41,9 +41,5 @@ public class cardScreen {
 			double bustProbability = (player - 11)*7.69;
 			System.out.printf(" \t\t버스트 확률 : %.2f%%\n", bustProbability);
 		}
-		else {
-			System.out.println("\t잘못된 카드 합입니다.");
-		}
 	}
-
 }
