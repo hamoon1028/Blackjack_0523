@@ -62,13 +62,13 @@ public class Controller {
 
 		
 		// 스플릿 테스트를 위한 코드
-//		if (money.getMoney() == 9000) {
-//			player.drawCard();
-//			dealer.drawCard();
-//			 //player.drawCard();
-//			player.getPlayerCard().add(player.getPlayerCard().get(0));
-//			dealer.drawCard();
-//		} else {
+		if (money.getMoney() == 9000) {
+			player.drawCard();
+			dealer.drawCard();
+			 //player.drawCard();
+			player.getPlayerCard().add(player.getPlayerCard().get(0));
+			dealer.drawCard();
+		} else {
 		
 		// 딜러, 플레이어 한 장씩 드로우
 		player.drawCard();
@@ -76,7 +76,7 @@ public class Controller {
 		player.drawCard();
 		dealer.drawCard();
 
-//}
+}
 		// 카드 뽑기 결과를 반영한 카드창
 		cScreen.cardScreen(player.getPlayerCard(), dealer.sortCard(), player.cardSum(player.getPlayerCard()),
 				money.getMoney(), money.getBetMoney());
@@ -126,16 +126,13 @@ public class Controller {
 	 * 게임 내에서 반복되는 구간(카드를 뽑고 숫자를 비교하는 순서)
 	 */
 	private void gameLoop() {
-
-		
-		if (issueChk = true) {
-			aScreen.issueChk();
-		}
 		
 		while (stageChk == 1) {
+			if(splitCnt != 0) {
 			 cScreen.cardScreen(player.getPlayerCard(), dealer.sortCard(),
 					 player.cardSum(player.getPlayerCard()), money.getMoney(),
 					 money.getBetMoney());
+			}
 			// 첫 턴이면 선택지 3개, n턴 이라면 선택지 2개인 화면 출력
 			if (canDoubleDown == true) {
 				aScreen.firstChoiceScreen(); // 선택지 3개
@@ -184,10 +181,8 @@ public class Controller {
 			
 		}
 		
-		if (dealer.cardSum(dealer.getDealerCard()) < 17) {
+		while(dealer.cardSum(dealer.getDealerCard()) < 17) {
 			dealer.drawCard();
-			cScreen.cardScreen(player.getPlayerCard(), dealer.sortCard(), player.cardSum(player.getPlayerCard()),
-					money.getMoney(), money.getBetMoney());
 		}
 
 		// 숫자 비교 -- split 된 상태라면 숫자비교 ㄴㄴ 아니라면 숫자비교 ㄱㄱ
@@ -221,13 +216,13 @@ public class Controller {
 	private void insuranceCheck(List<Card> dCard) {
 		input = 0;
 
-		if (hasAceCard(dCard)) {//05.23 GameController 메소드를 여기로
+		if (hasAceCard(dCard)) {
 			aScreen.insureanceCheckScreen();
 			input = scan.input(1,2);
 		}
 	}
 	
-	private boolean hasAceCard(List<Card> dCard) { //05.23 GameController 메소드를 여기로.
+	private boolean hasAceCard(List<Card> dCard) { 
 		Card idx = dCard.get(0);
 		String cardNumber2 = idx.getNumber().toString();
 		return cardNumber2.equals("A");
@@ -241,7 +236,6 @@ public class Controller {
 	 */
 	private void checkInsuranceProcess() {
 		
-		issueChk = true;
 		insuranceCheck(dealer.getDealerCard());
 		if (input == 1 && dealer.cardSum(dealer.getDealerCard()) != 21) {
 			money.Insurance();

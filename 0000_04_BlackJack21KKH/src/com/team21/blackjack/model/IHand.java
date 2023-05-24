@@ -3,11 +3,29 @@ package com.team21.blackjack.model;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * 카드리스트의 점수를 계산하는 메소드를 포함하며
+ * 자식 클래스에 draw메소드를 강제하는 Interface
+ * @since 	23.05.22
+ * @author 	HAMoon
+ */
 public interface IHand {
 	
-	
+	//자식 클래스들에 drawCard 메소드를 강제함
 	void drawCard();
 	
+	/**
+	 * 카드리스트를 파라미터로 받아서
+	 * 리스트 안의 각 카드 점수를 합해주는 역할을 하는 메소드
+	 * @since 	23.05.22
+	 * @author 	HAMoon
+	 * @param 	eachList = 점수를 합산할 카드리스트
+	 * @return	각 카드점수의 합 int
+	 * 점수 값이 숫자인 경우 각 숫자를 점수로 계산
+	 * 점수 값이 J,Q,K 문자인 경우 10점을 점수로 계산
+	 * 점수 값이 A 문자인 경우 	-> 총 합에 11을 더해도 21 이하인 경우 -> 11점으로 계산
+	 * 						-> 총 합에 11을 더하면 21을 초과하는 경우 -> 1점으로 계산
+	 */
 	default int cardSum(List<Card> eachList) {
 	    int sum = 0;
 	    int numOfAce = 0; // 에이스 카드의 개수를 저장하는 변수 추가

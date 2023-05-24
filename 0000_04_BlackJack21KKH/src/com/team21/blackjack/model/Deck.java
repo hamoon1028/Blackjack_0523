@@ -3,6 +3,10 @@ package com.team21.blackjack.model;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 중복되지 않는 랜덤한 카드로 구성된 덱을 만드는 클래스
+ * @author MKJeon
+ */
 public class Deck {
 	
 	private List<Card> cardcase;

@@ -3,6 +3,14 @@ package com.team21.blackjack.model;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 딜러의 카드리스트와 관련된 클래스.
+ * 다음의 기능을 함
+ * -딜러의 카드리스트에 카드를 추가하는 기능
+ * -딜러 카드리스트의 두번째 카드가 Ace인지 판단하는 기능
+ * -두번째 카득 Ace라면, 딜러 카드리스트의 첫번째와 두번째 카드의 순서를 바꾸는 기능
+ * @author HAMoon
+ */
 public class Dealer extends HandImpl{
 
 	private List<Card> dealerCard = new ArrayList<Card>();
