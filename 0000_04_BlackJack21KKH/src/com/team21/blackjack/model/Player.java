@@ -5,10 +5,8 @@ import java.util.List;
 
 /**
  * 플레이어의 카드리스트와 관련된 클래스.
- * 다음의 기능을 함
- * -플레이어의 카드리스트에 카드를 추가하는 기능
- * -플레이어 카드리스트를 스플릿시키는 기능
- * -카드리스트 내 두장의 카드를 비교하는 기능
+ * - HandImpl 추상메소드 drawCard()를 구현하여 플레이어의 카드 리스트에 담음
+ * - 두 카드의 숫자를 비교하여 같을 경우, 두번째 카드를 split카드 리스트로 옮김
  * @author HAMoon
  */
 public class Player extends HandImpl{
@@ -27,12 +25,7 @@ public class Player extends HandImpl{
 		allCard.remove(0);
 	}
 	
-	/**
-	 * 플레이어 카드리스트의 두번째 카드를
-	 * 스플릿된 카드리스트의 첫번째 카드로 옮기는 기능을 하는 메소드
-	 * @since 23.05.22
-	 * @author HaMoon
-	 */
+
 	public List<Card> getPlayerCard() {
 		return playerCard;
 	}
@@ -41,6 +34,12 @@ public class Player extends HandImpl{
 		this.playerCard = playerCard;
 	}
 
+	/**
+	 * 플레이어 카드리스트의 두번째 카드를
+	 * 스플릿된 카드리스트의 첫번째 카드로 옮기는 기능을 하는 메소드
+	 * @since 23.05.22
+	 * @author HaMoon
+	 */
 	public void makeSplitCard(){
 		List<Card> splitCard = this.playerCard;
 		splitCard.get(1);

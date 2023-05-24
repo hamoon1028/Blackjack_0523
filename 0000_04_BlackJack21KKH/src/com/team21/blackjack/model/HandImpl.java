@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 각 하위 클래스에서 실행되는 카드 뽑기(drawCard) 기능을 전달하며
- * IHand 인터페이스 클래스를 자식에게 abstract
+ * IHand 인터페이스 클래스를 자식 클래스에게 abstract하는 추상 클래스
+ * 자식인 Player클래스에서 생성한 splitCard 시작 카드를 담는 array. 
+ *  (자식인 Player_Split에서 이어받도록)
+ * @since 23.05.22
  * @author HAMoon
  */
 public abstract class HandImpl implements IHand {
