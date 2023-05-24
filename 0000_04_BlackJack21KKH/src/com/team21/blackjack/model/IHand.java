@@ -1,4 +1,4 @@
-package com.team21.hamoon;
+package com.team21.blackjack.model;
 
 import java.util.Iterator;
 import java.util.List;
@@ -41,8 +41,5 @@ public interface IHand {
 	    return sum;
 	}
 	
-//	default void resetCard(List<Card> eachList) {
-//		eachList.removeAll(eachList);
-//	}
 	
 }

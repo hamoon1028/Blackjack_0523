@@ -1,4 +1,4 @@
-package com.team21.hamoon;
+package com.team21.blackjack.model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,9 +18,6 @@ public class Dealer extends HandImpl{
 		return dealerCard;
 	}
 	
-	public void setDealerCard(List<Card> dealerCard) {
-		this.dealerCard = dealerCard;
-	}
 
 	public Card sortCard() {
 		if(isAce()) {
@@ -31,7 +28,7 @@ public class Dealer extends HandImpl{
 		return dealerCard.get(0);
 	}
 	
-	private boolean isAce() {
+	public boolean isAce() {
 		Card idx1 = dealerCard.get(1);
 		String cardNumber2 = idx1.getNumber().toString();
 		return cardNumber2.equals("A");
