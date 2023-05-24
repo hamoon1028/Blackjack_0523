@@ -1,52 +1,89 @@
 package com.team21.blackjack.controller;
-// 판단여부까지 내가 진행해서 switch case문을 이용한다면??
+
+/**
+ * 블랙잭 게임 중 가진 돈과 배팅액 연산을 담당하는 메소드를 모은 클래스
+ * @author SYKim
+ *
+ */
 public class Money {
 		
 	private int money = 10000;
 	private int betMoney;
 	
-	// 게임 시작 시 초기 배팅값을 받는 메소드
+	/**
+	 * 게임 시작시 입력된 배팅 금액을 처리하는 메소드
+	 * 베팅 금액을 betMoney 멤버필드에 저장하고
+	 * 가진 돈에서 입력된 금액만큼을 차감한다
+	 * @since	23.05.22
+	 * @author 	SYKim
+	 * @param 	입력 받은 배팅 금액
+	 */
 	public void firstBet(int n) {	
-//		System.out.println("배팅 금액을 입력하세요.");
 		this.betMoney = n;
 		this.money = money - n;
-//		System.out.println("배팅 하신 금액:" + money + "원 입니다.\n게임을 시작합니다."  );
 		}
 	
 	
-	// 입력받은 초기 배팅 금액에 *2 로직 구현해야함
+	/**
+	 * 사용자가 고른 더블다운 선택지의 결과를
+	 * 배팅액과 가진 돈에 반영하는 메소드
+	 * @since	23.05.22
+	 * @author 	SYKim 
+	 */
 	public void doubleDown() {
 		this.money = money - betMoney;
 		this.betMoney = betMoney*2;
-//		System.out.println("더블다운! 한 장의 카드만을 받습니다. ");
-//		System.out.println("더블다운으로 인한 배팅금액:" + doubleMoney +"원 입니다.");
 	}
 	
-	// 게임동작 클래스에서 딜러의 첫 오픈카드가 A가 나왔을 경우
-	// 인슈어런스를 판단 후 진행, 초기 배팅금액의 50%를 보험금으로 지불하는 로직 구현
-	// 딜러의 두번째 카드 오픈 후 블랙잭일 경우 차감없이 본전
+	/**
+	 * 사용자가 고른 Insurance 선택지의 결과를
+	 * 배팅액과 가진 돈에 반영하는 메소드
+	 * @since	23.05.22
+	 * @author 	SYKim 
+	 */
 	public void Insurance() {
-//		System.out.println("딜러의 오픈카드 'A'가 나왔습니다.\n 인슈어런스란? 초기 배팅금액의 50%를 보험금으로 지불합니다.");
-//		System.out.println("인슈어런스를 진행하시겠습니까?\n1.yes\t2.no");
-//		Scanner scan = new Scanner(System.in);
-//		int x = scan.nextInt();
 		this.betMoney = (int)(betMoney*0.5);
 		}
+	
+	/**
+	 * 게임을 이겼을 때의 결과를
+	 * 배팅액과 가진 돈에 반영하는 메소드
+	 * @since	23.05.22
+	 * @author 	SYKim 
+	 */
 	public void winCase() {
 		this.money += this.betMoney*2;
 		
 	}
 	
+	/**
+	 * 게임을 비겼을 때의 결과를
+	 * 배팅액과 가진 돈에 반영하는 메소드
+	 * @since	23.05.22
+	 * @author 	SYKim 
+	 */
 	public void pushCase() {
 		this.money += this.betMoney;
 		
 	}
 	
+	/**
+	 * 게임을 블랙잭으로 이겼을 때의 결과를
+	 * 배팅액과 가진 돈에 반영하는 메소드
+	 * @since	23.05.22
+	 * @author 	SYKim 
+	 */
 	public void blackWinCase() {
 		this.money += (int)(betMoney*2.5);
 		
 	}
 	
+	/**
+	 * 게임을 졌을 때의 결과를
+	 * 배팅액과 가진 돈에 반영하는 메소드
+	 * @since	23.05.22
+	 * @author 	SYKim 
+	 */
 	public void loseCase() {
 		
 	}
