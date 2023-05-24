@@ -125,7 +125,7 @@ public class Controller {
 	/**
 	 * 게임 내에서 반복되는 구간(카드를 뽑고 숫자를 비교하는 순서)
 	 */
-	public void gameLoop() {
+	private void gameLoop() {
 
 		
 		if (issueChk = true) {
@@ -184,7 +184,7 @@ public class Controller {
 			
 		}
 		
-		if (dealer.cardSum(dealer.dealerCard) < 17) {
+		if (dealer.cardSum(dealer.getDealerCard()) < 17) {
 			dealer.drawCard();
 			cScreen.cardScreen(player.getPlayerCard(), dealer.sortCard(), player.cardSum(player.getPlayerCard()),
 					money.getMoney(), money.getBetMoney());
@@ -218,7 +218,7 @@ public class Controller {
 	 * @param dCrd 딜러의 카드 정보
 	 * @return 인슈어런스 여부 정보 int
 	 */
-	public void insuranceCheck(List<Card> dCard) {
+	private void insuranceCheck(List<Card> dCard) {
 		input = 0;
 
 		if (hasAceCard(dCard)) {//05.23 GameController 메소드를 여기로
@@ -239,7 +239,7 @@ public class Controller {
 	 * @author KHKim
 	 * 딜러의 카드 합이 21(블랙잭)이 아니라면 ->
 	 */
-	public void checkInsuranceProcess() {
+	private void checkInsuranceProcess() {
 		
 		issueChk = true;
 		insuranceCheck(dealer.getDealerCard());
@@ -266,7 +266,7 @@ public class Controller {
 	 * @return 플레이어의 선택 	1 -> 스플릿 실행
 	 * 						2 -> 스플릿 미실행
 	 */
-	public int splitCheck() {
+	private int splitCheck() {
 		int input = 0;
 		rScreen.splitCheckScreen();
 		input = scan.input(1,2);
@@ -283,7 +283,7 @@ public class Controller {
 	 * 플레이어카드 드로우
 	 * 결과화면 출력
 	 */
-	public void checkSplitProcess() {
+	private void checkSplitProcess() {
 		issueChk = true;
 
 		if (splitCheck() == 1) {
@@ -308,7 +308,7 @@ public class Controller {
 	 * 						-> 딜러가 블랙잭이 아니라면 플레이어 승리
 	 * 플레이어가 블랙잭일 경우 이외 -> 딜러가 블랙잭이라면 플레이어 패배
 	 */
-	public void checkBlackJackProcess() {
+	private void checkBlackJackProcess() {
 		issueChk = true;
 		if (result.checkBlackJack(player.cardSum(player.getPlayerCard()))) {
 			if (splitCnt > 0) {
@@ -339,7 +339,7 @@ public class Controller {
 	 * @since	23.05.22
 	 * @author 	KHKim
 	 */
-	public void restartGame() {
+	private void restartGame() {
 
 		aScreen.restarConfirmtScreen();
 		input = 0;
@@ -360,7 +360,7 @@ public class Controller {
 	 * @since 23.05.22
 	 * @author KHKim
 	 */
-	public void askRestart() {
+	private void askRestart() {
 		// 게임 종료 후 재시작 여부 확인
 		aScreen.restartScreen(money.getMoney());
 		input = scan.input(1, 2);
@@ -382,7 +382,7 @@ public class Controller {
 	 * @param mmoney	가진 돈
 	 * @param betMoney	배팅액
 	 */
-	public void scoreCompare(Object pCard, Object dCard, int pSum, int dSum, int mmoney, int betMoney) {
+	private void scoreCompare(Object pCard, Object dCard, int pSum, int dSum, int mmoney, int betMoney) {
 
 		if (stageChk == 2) {
 			input = result.gameResult(pSum, dSum);

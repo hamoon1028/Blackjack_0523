@@ -3,7 +3,6 @@ package com.team21.blackjack.view;
 public class cardScreen {
 
 
-
 	public void cardScreen
 	(Object pCard, Object dCard, int cardSum, int money, int betMoney) {
 		System.out.println("==================================================\n");
@@ -33,7 +32,7 @@ public class cardScreen {
 	 * @since 2023_05_22
 	 */
 
-	public void playerProbability(int player) {
+	private void playerProbability(int player) {
 
 		if (player <=11 || player == 21) {
 			System.out.println("\t\t버스트 확률 : 0%");  

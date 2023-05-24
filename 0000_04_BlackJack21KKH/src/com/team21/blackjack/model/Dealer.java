@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Dealer extends HandImpl{
 
-	public List<Card> dealerCard = new ArrayList<Card>();
+	private List<Card> dealerCard = new ArrayList<Card>();
 	
 	@Override
 	public void drawCard() {
