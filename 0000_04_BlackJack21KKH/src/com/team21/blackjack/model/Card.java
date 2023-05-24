@@ -1,4 +1,4 @@
-package com.team21.hamoon;
+package com.team21.blackjack.model;
 
 import java.util.Objects;
 

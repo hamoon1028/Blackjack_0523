@@ -1,74 +1,84 @@
-package com.team21.khkim;
+package com.team21.blackjack.controller;
 
 import java.util.ArrayList;
-import java.util.InputMismatchException;
 import java.util.List;
-
-import com.team21.hamoon.Card;
-import com.team21.hamoon.Dealer;
-import com.team21.hamoon.Player;
-import com.team21.hamoon.Player_Split;
-import com.team21.sy.Money;
-import com.team21.util.Scanner_Util;
-import com.team21.view.GameView;
-import com.team21.yjkim.Result;
+import com.team21.blackjack.model.Card;
+import com.team21.blackjack.model.Dealer;
+import com.team21.blackjack.model.Player;
+import com.team21.blackjack.model.Player_Split;
+import com.team21.blackjack.util.Scanner_Util;
+import com.team21.blackjack.view.announceScreen;
+import com.team21.blackjack.view.cardScreen;
+import com.team21.blackjack.view.resultSccreen;
 
 public class Controller {
-	GameController gc = new GameController();
 	Scanner_Util scan = new Scanner_Util();
-	GameView screen = new GameView();
-	Result result = new Result();
+	resultSccreen rScreen = new resultSccreen();
+	cardScreen cScreen = new cardScreen();
+	announceScreen aScreen = new announceScreen();
 	Player player = new Player();
 	Dealer dealer = new Dealer();
+	Result result = new Result();
 	Player_Split split = new Player_Split();
 	Money money = new Money();
 
 	private List<List<Card>> splitResults = new ArrayList<>(); // 스플릿 된 카드들의 결과를 담는 2차원 List
 	List<Card> splitList = split.getSplitCard();
-	int input = 0; // 게임 중 int 입력값을 저장하는 변수
-	int turn = 1; // 턴 수 저장(더블다운 판단을 위함)
-	int saveFirstBet = 0; // 첫 배팅금액을 저장하는 변수(여러번 스플릿 할 경우 쓰임)
-	int splitCnt = 0; // 스플릿 가능 횟수
-	int stageChk = 0; // 게임 조기종료시 남은 과정을 건너뛰기 위한 변수
-	// 0 : 완전 처음, 1 : 1회차 이후, 2: Stand 선택, 3: 게임종료 선택
+	
+	boolean canDoubleDown = true; 		//더블다운이 가능한지 판단하는 변수
+	boolean issueChk = false;			//게임루프가 돌기 전 특수한 상황이 있었는지 판단하기 위한 변수
+										//특수상황이 없을 경우. 카드정보창이 2회 연속으로 뜨는 점이 어색하다
+	int input = 0; 		// 게임 중 int 입력값을 저장하는 변수
+	int saveFirstBet = 0; 	// 첫 배팅금액을 저장하는 변수(여러번 스플릿 할 경우 쓰임)
+	int splitCnt = 0; 	// 스플릿 가능한 횟수를 저장하는 변수	
+	int stageChk = 0; 	// 게임 조기 종료시 남은 과정을 건너뛰기 위한 변수
+						// 0 : 완전 처음, 1 : 1회차 이후, 2: Stand 선택, 3: 게임종료 선택
 
 	public void startGame() {
 
 		// 게임 인트로
 		if (stageChk == 0) {
-			screen.firstScreen();
+			aScreen.firstScreen();
 			scan.scanAnything();
 			stageChk++; // 두번째 실행부터는 이 단계 건너뜀
 		}
 
-		// 초기 배팅 초기 배팅 금액을 입력해주세요 화면
-		screen.betScreen(money.getMoney());
-
+	
+		// 초기 배팅, '배팅 금액을 입력해주세요' 화면
+		aScreen.betScreen(money.getMoney());
+		
+		//배팅 금액 입력 = min 1000 / max 가진 돈
 		input = scan.input(1000, money.getMoney());
-
+		
+		//money 멤버필드들에 배팅결과 반영
 		money.firstBet(input);
-		saveFirstBet = money.getBetMoney(); // 초기 배팅값 저장(여러번 스플릿 할 경우 초기 배팅값 필요)
+		
+		// 초기 배팅값 저장(여러번 스플릿 할 경우 초기 배팅값 필요)
+		saveFirstBet = money.getBetMoney(); 
 
 		// '카드 뽑기 위해 엔터를 입력하세요' 화면
-		screen.playScreen();
+		aScreen.playScreen();
 		scan.scanAnything();
 
+		
+		// 스플릿 테스트를 위한 코드
+//		if (money.getMoney() == 9000) {
+//			player.drawCard();
+//			dealer.drawCard();
+//			 //player.drawCard();
+//			player.getPlayerCard().add(player.getPlayerCard().get(0));
+//			dealer.drawCard();
+//		} else {
+		
 		// 딜러, 플레이어 한 장씩 드로우
-		// 스플릿 테스트를 위해 바꿔놓음
-		if (money.getMoney() == 9000) {
-			player.drawCard();
-			dealer.drawCard();
-			 //player.drawCard();
-			player.getPlayerCard().add(player.getPlayerCard().get(0));
-			dealer.drawCard();
-		} else {
-			player.drawCard();
-			dealer.drawCard();
-			player.drawCard();
-			dealer.drawCard();
-		}
+		player.drawCard();
+		dealer.drawCard();
+		player.drawCard();
+		dealer.drawCard();
+
+//}
 		// 카드 뽑기 결과를 반영한 카드창
-		screen.cardScreen(player.getPlayerCard(), dealer.sortCard(), player.cardSum(player.getPlayerCard()),
+		cScreen.cardScreen(player.getPlayerCard(), dealer.sortCard(), player.cardSum(player.getPlayerCard()),
 				money.getMoney(), money.getBetMoney());
 
 		// 인슈어런스 여부를 판단하고 처리하는 프로세스
@@ -105,7 +115,7 @@ public class Controller {
 
 		// 게임 재시작(변수 초기화 후 startGame 재귀호출) or 종료
 		if (money.getMoney() < 1000) {
-			screen.gameOver();
+			rScreen.gameOver();
 		} else {
 			askRestart();
 		}
@@ -115,17 +125,20 @@ public class Controller {
 	public void gameLoop() {
 
 		
+		if (issueChk = true) {
+			aScreen.issueChk();
+		}
 		
 		while (stageChk == 1) {
-			 screen.cardScreen(player.getPlayerCard(), dealer.sortCard(),
+			 cScreen.cardScreen(player.getPlayerCard(), dealer.sortCard(),
 					 player.cardSum(player.getPlayerCard()), money.getMoney(),
 					 money.getBetMoney());
 			// 첫 턴이면 선택지 3개, n턴 이라면 선택지 2개인 화면 출력
-			if (turn == 1) {
-				screen.firstChoiceScreen(); // 선택지 3개
+			if (canDoubleDown == true) {
+				aScreen.firstChoiceScreen(); // 선택지 3개
 				input = scan.input(1, 3);
 			} else {
-				screen.basicChoiceScreen(); // 선택지 2개
+				aScreen.basicChoiceScreen(); // 선택지 2개
 				input = scan.input(1, 2);
 			}
 
@@ -136,8 +149,8 @@ public class Controller {
 				if (dealer.cardSum(dealer.getDealerCard()) < 17) {
 					dealer.drawCard();
 				}
-				turn++;
-				screen.cardScreen(player.getPlayerCard(), dealer.sortCard(), player.cardSum(player.getPlayerCard()),
+				canDoubleDown = false;
+				cScreen.cardScreen(player.getPlayerCard(), dealer.sortCard(), player.cardSum(player.getPlayerCard()),
 						money.getMoney(), money.getBetMoney());
 
 				break;
@@ -170,7 +183,7 @@ public class Controller {
 		
 		if (dealer.cardSum(dealer.dealerCard) < 17) {
 			dealer.drawCard();
-			screen.cardScreen(player.getPlayerCard(), dealer.sortCard(), player.cardSum(player.getPlayerCard()),
+			cScreen.cardScreen(player.getPlayerCard(), dealer.sortCard(), player.cardSum(player.getPlayerCard()),
 					money.getMoney(), money.getBetMoney());
 		}
 
@@ -200,9 +213,9 @@ public class Controller {
 	public void insuranceCheck(List<Card> dCard) {
 		input = 0;
 
-		if (hasAceCard(dCard)) { //05.23 아래 메소드로 수정
-			screen.insureanceCheckScreen();
-			input = scan.scanInt();
+		if (hasAceCard(dCard)) {//05.23 GameController 메소드를 여기로
+			aScreen.insureanceCheckScreen();
+			input = scan.input(1,2);
 		}
 	}
 	
@@ -213,17 +226,19 @@ public class Controller {
 	}
 
 	public void checkInsuranceProcess() {
+		
+		issueChk = true;
 		insuranceCheck(dealer.getDealerCard());
 		if (input == 1 && dealer.cardSum(dealer.getDealerCard()) != 21) {
 			money.Insurance();
-			screen.insuranceFScreen();
+			rScreen.insuranceFScreen();
 		} else if (input == 1 && dealer.cardSum(dealer.getDealerCard()) == 21) {
 			money.Insurance();
 			money.winCase();
-			screen.resultcardScreen(player.getPlayerCard(), dealer.getDealerCard(),
+			cScreen.resultcardScreen(player.getPlayerCard(), dealer.getDealerCard(),
 					player.cardSum(player.getPlayerCard()), dealer.cardSum(dealer.getDealerCard()), money.getMoney(),
 					money.getBetMoney());
-			screen.insuranceSScreen();
+			rScreen.insuranceSScreen();
 			stageChk = 3;
 
 		}
@@ -231,12 +246,13 @@ public class Controller {
 
 	public int splitCheck() {
 		int input = 0;
-		screen.splitCheckScreen();
-		input = scan.input(1,2); //05.23 범위 예외처리
+		rScreen.splitCheckScreen();
+		input = scan.input(1,2);
 		return input;
 	}
 
 	public void checkSplitProcess() {
+		issueChk = true;
 
 		if (splitCheck() == 1) {
 			money.firstBet(saveFirstBet);
@@ -245,7 +261,7 @@ public class Controller {
 			splitList = player.getSplitCardStart();
 			
 			player.drawCard();
-			screen.cardScreen(player.getPlayerCard(), dealer.sortCard(), player.cardSum(player.getPlayerCard()),
+			cScreen.cardScreen(player.getPlayerCard(), dealer.sortCard(), player.cardSum(player.getPlayerCard()),
 					money.getMoney(), money.getBetMoney());
 
 		}
@@ -253,22 +269,23 @@ public class Controller {
 	}
 
 	public void checkBlackJackProcess() {
+		issueChk = true;
 		if (result.checkBlackJack(player.cardSum(player.getPlayerCard()))) {
 			if (splitCnt > 0) {
 
 			} else if (result.checkBlackJack(dealer.cardSum(dealer.getDealerCard()))) {
 				money.pushCase();
-				screen.resultcardScreen(player.getPlayerCard(), dealer.getDealerCard(),
+				cScreen.resultcardScreen(player.getPlayerCard(), dealer.getDealerCard(),
 						player.cardSum(player.getPlayerCard()), dealer.cardSum(dealer.getDealerCard()),
 						money.getMoney(), money.getBetMoney());
-				screen.blackPush();
+				rScreen.blackPush();
 				stageChk = 3;
 			} else {
 				money.blackWinCase();
-				screen.resultcardScreen(player.getPlayerCard(), dealer.getDealerCard(),
+				cScreen.resultcardScreen(player.getPlayerCard(), dealer.getDealerCard(),
 						player.cardSum(player.getPlayerCard()), dealer.cardSum(dealer.getDealerCard()),
 						money.getMoney(), money.getBetMoney());
-				screen.winBlackJackScreen();
+				rScreen.winBlackJackScreen();
 				stageChk = 3;
 			}
 
@@ -277,26 +294,26 @@ public class Controller {
 
 	public void restartGame() {
 
-		screen.restarConfirmtScreen();
+		aScreen.restarConfirmtScreen();
 		input = 0;
 		saveFirstBet = 0;
 		player.getPlayerCard().clear();
 		dealer.getDealerCard().clear();
 		splitResults.clear();
 		splitCnt = 0;
-		turn = 1;
+		canDoubleDown = true;
 		stageChk = 1;
 		startGame(); // 게임을 다시 시작
 	}
 
 	public void askRestart() {
 		// 게임 종료 후 재시작 여부 확인
-		screen.restartScreen(money.getMoney());
+		aScreen.restartScreen(money.getMoney());
 		input = scan.input(1, 2);
 		if (input == 1) {
 			restartGame();
 		} else if (input == 2) {
-			screen.endScreen();
+			rScreen.endScreen();
 		}
 	}
 
@@ -312,8 +329,8 @@ public class Controller {
 				} else {
 					stageChk = 3;
 					money.pushCase();
-					screen.resultcardScreen(pCard, dCard, pSum, dSum, mmoney, betMoney);
-					screen.pushScreen();
+					cScreen.resultcardScreen(pCard, dCard, pSum, dSum, mmoney, betMoney);
+					rScreen.pushScreen();
 					break;
 				}
 			case 1:
@@ -324,8 +341,8 @@ public class Controller {
 
 					stageChk = 3;
 					money.winCase();
-					screen.resultcardScreen(pCard, dCard, pSum, dSum, mmoney, betMoney);
-					screen.winScreen();
+					cScreen.resultcardScreen(pCard, dCard, pSum, dSum, mmoney, betMoney);
+					rScreen.winScreen();
 					break;
 				}
 			case 2:
@@ -335,8 +352,8 @@ public class Controller {
 				} else {
 					stageChk = 3;
 					money.loseCase();
-					screen.resultcardScreen(pCard, dCard, pSum, dSum, mmoney, betMoney);
-					screen.loseScreen();
+					cScreen.resultcardScreen(pCard, dCard, pSum, dSum, mmoney, betMoney);
+					rScreen.loseScreen();
 					break;
 				}
 
@@ -347,10 +364,10 @@ public class Controller {
 				} else {
 					stageChk = 3;
 					money.loseCase();
-					screen.resultcardScreen(player.getPlayerCard(), dealer.getDealerCard(),
+					cScreen.resultcardScreen(player.getPlayerCard(), dealer.getDealerCard(),
 							player.cardSum(player.getPlayerCard()), dealer.cardSum(dealer.getDealerCard()),
 							money.getMoney(), money.getBetMoney());
-					screen.bustLoseScreen();
+					rScreen.bustLoseScreen();
 					break;
 				}
 			case 4:
@@ -360,10 +377,10 @@ public class Controller {
 				} else {
 					stageChk = 3;
 					money.winCase();
-					screen.resultcardScreen(player.getPlayerCard(), dealer.getDealerCard(),
+					cScreen.resultcardScreen(player.getPlayerCard(), dealer.getDealerCard(),
 							player.cardSum(player.getPlayerCard()), dealer.cardSum(dealer.getDealerCard()),
 							money.getMoney(), money.getBetMoney());
-					screen.winDBustScreen();
+					rScreen.winDBustScreen();
 				}
 			}
 
