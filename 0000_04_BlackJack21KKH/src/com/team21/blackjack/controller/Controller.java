@@ -62,13 +62,13 @@ public class Controller {
 
 		
 		// 스플릿 테스트를 위한 코드
-		if (money.getMoney() == 9000) {
-			player.drawCard();
-			dealer.drawCard();
-			 //player.drawCard();
-			player.getPlayerCard().add(player.getPlayerCard().get(0));
-			dealer.drawCard();
-		} else {
+//		if (money.getMoney() == 9000) {
+//			player.drawCard();
+//			dealer.drawCard();
+//			 //player.drawCard();
+//			player.getPlayerCard().add(player.getPlayerCard().get(0));
+//			dealer.drawCard();
+//		} else {
 		
 		// 딜러, 플레이어 한 장씩 드로우
 		player.drawCard();
@@ -76,7 +76,7 @@ public class Controller {
 		player.drawCard();
 		dealer.drawCard();
 
-}
+//}
 		// 카드 뽑기 결과를 반영한 카드창
 		cScreen.cardScreen(player.getPlayerCard(), dealer.sortCard(), player.cardSum(player.getPlayerCard()),
 				money.getMoney(), money.getBetMoney());
