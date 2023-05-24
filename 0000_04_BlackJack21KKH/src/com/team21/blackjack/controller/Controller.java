@@ -122,6 +122,9 @@ public class Controller {
 
 	}// startGame의 끝
 
+	/**
+	 * 게임 내에서 반복되는 구간(카드를 뽑고 숫자를 비교하는 순서)
+	 */
 	public void gameLoop() {
 
 		
@@ -207,7 +210,12 @@ public class Controller {
 	}
 
 	/**
-	 * @param obj 딜러의 카드 정보
+	 * 딜러가 첫 카드에 Ace카드를 들고 있을 경우,
+	 * 인슈어런스를 할 지 플레이어에게 묻고
+	 * 그 선택을 int 값으로 저장하는 메소드
+	 * @since 23.05.22
+	 * @author KHKim
+	 * @param dCrd 딜러의 카드 정보
 	 * @return 인슈어런스 여부 정보 int
 	 */
 	public void insuranceCheck(List<Card> dCard) {
@@ -225,6 +233,12 @@ public class Controller {
 		return cardNumber2.equals("A");
 	}
 
+	/**
+	 * 플레이어가 Insurance를 선택했을 경우의 프로세스
+	 * @since 23.05.22
+	 * @author KHKim
+	 * 딜러의 카드 합이 21(블랙잭)이 아니라면 ->
+	 */
 	public void checkInsuranceProcess() {
 		
 		issueChk = true;
@@ -244,6 +258,14 @@ public class Controller {
 		}
 	}
 
+	/**
+	 * 스플릿 가능할 경우, 플레이어에게 스플릿 여부를 묻고
+	 * 플레이어 선택의 결과를 반환하는 메소드
+	 * @since 23.05.22
+	 * @author KHKim
+	 * @return 플레이어의 선택 	1 -> 스플릿 실행
+	 * 						2 -> 스플릿 미실행
+	 */
 	public int splitCheck() {
 		int input = 0;
 		rScreen.splitCheckScreen();
@@ -251,6 +273,16 @@ public class Controller {
 		return input;
 	}
 
+	/**
+	 * 사용자가 스플릿 하기를 선택했을 경우의 프로세스
+	 * @since 23.05.22
+	 * @author KHKim
+	 * 스플릿 배팅액 처리
+	 * 스플릿 가능횟수 ++
+	 * 두 장의 카드를 플레이어 카드와 스플릿 카드로 각각 한 장씩 분리
+	 * 플레이어카드 드로우
+	 * 결과화면 출력
+	 */
 	public void checkSplitProcess() {
 		issueChk = true;
 
@@ -268,6 +300,14 @@ public class Controller {
 
 	}
 
+	/**
+	 * 딜러나 플레이어의처음 뽑은 두 장의 카드가 블랙잭인 경우의 프로세스
+	 * @since	23.05.22
+	 * @author KHKim
+	 * 플레이어가 블랙잭일 경우 	-> 딜러 역시 블랙잭이라면 push
+	 * 						-> 딜러가 블랙잭이 아니라면 플레이어 승리
+	 * 플레이어가 블랙잭일 경우 이외 -> 딜러가 블랙잭이라면 플레이어 패배
+	 */
 	public void checkBlackJackProcess() {
 		issueChk = true;
 		if (result.checkBlackJack(player.cardSum(player.getPlayerCard()))) {
@@ -291,7 +331,14 @@ public class Controller {
 
 		}
 	}
-
+	
+	/**
+	 * 사용자가 게임을 다시 시작하는 선택지를 골랐을 때,
+	 * 사용했던 변수들을 초기화하고
+	 * startGame을 재귀호출하는 메소드
+	 * @since	23.05.22
+	 * @author 	KHKim
+	 */
 	public void restartGame() {
 
 		aScreen.restarConfirmtScreen();
@@ -306,6 +353,13 @@ public class Controller {
 		startGame(); // 게임을 다시 시작
 	}
 
+	/**
+	 * 한 번의 게임이 끝났을 때,
+	 * 게임을 종료할 지 더 할지 재시작 여부를 확인하고
+	 * 확인한 결과값을 int 값으로 반환하는 메소드
+	 * @since 23.05.22
+	 * @author KHKim
+	 */
 	public void askRestart() {
 		// 게임 종료 후 재시작 여부 확인
 		aScreen.restartScreen(money.getMoney());
@@ -316,7 +370,18 @@ public class Controller {
 			rScreen.endScreen();
 		}
 	}
-
+	
+	/**
+	 * 게임의 결과를 받아 와서 출력하는 메소드
+	 * @since 			23.05.22
+	 * @author 			KHKim
+	 * @param pCard		플레이어의 카드 정보
+	 * @param dCard		딜러의 카드 정보
+	 * @param pSum		플레이어 카드의 점수
+	 * @param dSum		딜러 카드의 점수
+	 * @param mmoney	가진 돈
+	 * @param betMoney	배팅액
+	 */
 	public void scoreCompare(Object pCard, Object dCard, int pSum, int dSum, int mmoney, int betMoney) {
 
 		if (stageChk == 2) {

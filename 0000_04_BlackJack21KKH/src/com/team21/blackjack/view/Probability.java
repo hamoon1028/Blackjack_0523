@@ -21,40 +21,4 @@ public class Probability {
 		}
 	}
 
-
-
-	//	private int getCardValue(Object card) {
-	//		// card가 List<Card> 타입인 경우
-	//		if (card instanceof List<?>) {
-	//			List<?> cardList = (List<?>) card;
-	//			if (!cardList.isEmpty()) {
-	//				Object firstCard = cardList.get(0);
-	//				if (firstCard instanceof Card) {
-	//					Card cardObject = (Card) firstCard;
-	//					String cardNumber = cardObject.getNumber().toString();
-	//
-	//					// A 카드 처리
-	//					if (cardNumber.equals("A")) {
-	//						return 11;  // A 카드의 값을 11로 반환
-	//					}
-	//
-	//					// J, Q, K 카드 처리
-	//					if (cardNumber.equals("J") || cardNumber.equals("Q") || cardNumber.equals("K")) {
-	//						return 10;  // J, Q, K 카드의 값을 10으로 반환
-	//					}
-	//
-	//					// 일반 숫자 카드 처리
-	//					try {
-	//						int cardValue = Integer.parseInt(cardNumber);
-	//						return cardValue;
-	//					} catch (NumberFormatException e) {
-	//						e.printStackTrace();
-	//					}
-	//				}
-	//			}
-	//		}
-	//
-	//		// 추출 실패 시 기본값 반환
-	//		return 0;
-	//	}
 }
