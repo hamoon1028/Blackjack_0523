@@ -42,7 +42,7 @@ public class Money {
 	 * @author 	SYKim 
 	 */
 	public void Insurance() {
-		this.betMoney = (int)(betMoney*0.5);
+		this.money = money-(int)(betMoney*0.5);
 		}
 	
 	/**
