@@ -4,6 +4,8 @@ import java.util.Objects;
 
 /**
  * 모양과 숫자를 랜덤으로 조합하여 카드 한 장을 만들어냄
+ * 추후 split(숫자 비교)를 위해 one -> shape, number 로 따로 구성 
+ * @author MKJeon
  */
 public class Card {
 

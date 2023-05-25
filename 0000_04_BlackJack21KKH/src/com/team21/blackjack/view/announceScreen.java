@@ -2,13 +2,7 @@ package com.team21.blackjack.view;
 
 public class announceScreen {
 
-	public void issueChk() {
-		System.out.println("==================================================\n");
-		System.out.println("\t\t딜러의 패에 Ace 카드는 없습니다. \n");
-		System.out.println("\t\t  일반적인 게임이 진행됩니다 \n");
-		System.out.println("==================================================\n");
-	}
-	
+
 	public void firstScreen() {
 		System.out.println("==================================================\n");
 		System.out.println("\t\t Black Jack 21\n");
@@ -43,6 +37,18 @@ public class announceScreen {
 	public void basicChoiceScreen() {
 		System.out.println("==================================================\n");
 		System.out.println("\t     [1] Hit [2] Stand \n");
+		System.out.println("==================================================\n");
+	}
+	
+	public void splitBustScreen() {
+		System.out.println("==================================================\n");
+		System.out.println("\t버스트 했습니다. 다음 스플릿게임이 진행됩니다 \n");
+		System.out.println("==================================================\n");
+	}
+	
+	public void nextGameAScreen() {
+		System.out.println("==================================================\n");
+		System.out.println("\t다음 스플릿 게임이 진행됩니다 \n");
 		System.out.println("==================================================\n");
 	}
 	

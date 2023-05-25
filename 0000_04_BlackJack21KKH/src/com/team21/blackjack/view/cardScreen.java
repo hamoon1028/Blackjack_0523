@@ -21,7 +21,6 @@ public class cardScreen {
 		System.out.printf("\t    딜러 카드 : %s  카드합: %d\n\n", dCard, dcardSum);
 		System.out.printf("\t\t 배팅액 %d\n\n",betMoney);
 		System.out.printf("\t %s 카드합: %d\t 보유액 : %d\n\n",pCard,pcardSum,money);
-		playerProbability(pcardSum);
 		System.out.println("==================================================\n");
 
 	}
@@ -41,5 +40,7 @@ public class cardScreen {
 			double bustProbability = (player - 11)*7.69;
 			System.out.printf(" \t\t버스트 확률 : %.2f%%\n", bustProbability);
 		}
+		
 	}
+	
 }

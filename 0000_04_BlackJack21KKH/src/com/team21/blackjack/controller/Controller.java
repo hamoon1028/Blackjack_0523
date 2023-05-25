@@ -126,16 +126,13 @@ public class Controller {
 	 * 게임 내에서 반복되는 구간(카드를 뽑고 숫자를 비교하는 순서)
 	 */
 	private void gameLoop() {
-
-		
-		if (issueChk = true) {
-			aScreen.issueChk();
-		}
 		
 		while (stageChk == 1) {
-			 cScreen.cardScreen(player.getPlayerCard(), dealer.sortCard(),
-					 player.cardSum(player.getPlayerCard()), money.getMoney(),
-					 money.getBetMoney());
+			if(issueChk==true && canDoubleDown==false) {
+				 cScreen.cardScreen(player.getPlayerCard(), dealer.sortCard(),
+						 player.cardSum(player.getPlayerCard()), money.getMoney(),
+						 money.getBetMoney());}
+				
 			// 첫 턴이면 선택지 3개, n턴 이라면 선택지 2개인 화면 출력
 			if (canDoubleDown == true) {
 				aScreen.firstChoiceScreen(); // 선택지 3개
@@ -153,8 +150,6 @@ public class Controller {
 					dealer.drawCard();
 				}
 				canDoubleDown = false;
-				cScreen.cardScreen(player.getPlayerCard(), dealer.sortCard(), player.cardSum(player.getPlayerCard()),
-						money.getMoney(), money.getBetMoney());
 
 				break;
 			case 2: // Stand
@@ -174,7 +169,7 @@ public class Controller {
 			}
 
 			// 플레이어나 딜러가 버스트하면 힛 못하도록 함
-			if (player.cardSum(player.getPlayerCard()) > 21 || dealer.cardSum(dealer.getDealerCard()) > 21) {
+			if (player.cardSum(player.getPlayerCard()) > 21) {
 				stageChk = 2;
 			}
 			if (stageChk >= 2) {
@@ -184,14 +179,16 @@ public class Controller {
 			
 		}
 		
-		if (dealer.cardSum(dealer.getDealerCard()) < 17) {
+		while(dealer.cardSum(dealer.getDealerCard()) < 17) {
 			dealer.drawCard();
-			cScreen.cardScreen(player.getPlayerCard(), dealer.sortCard(), player.cardSum(player.getPlayerCard()),
-					money.getMoney(), money.getBetMoney());
 		}
 
 		// 숫자 비교 -- split 된 상태라면 숫자비교 ㄴㄴ 아니라면 숫자비교 ㄱㄱ
-		if (splitCnt > 0) {
+		if (splitCnt > 0 && player.cardSum(player.getPlayerCard())>17) {
+			aScreen.splitBustScreen();
+			splitResults.add(player.getPlayerCard());
+		}else if (splitCnt>0) {
+			aScreen.nextGameAScreen();
 			splitResults.add(player.getPlayerCard());
 		} else {
 			scoreCompare(player.getPlayerCard(), dealer.getDealerCard(), player.cardSum(player.getPlayerCard()),
@@ -221,13 +218,13 @@ public class Controller {
 	private void insuranceCheck(List<Card> dCard) {
 		input = 0;
 
-		if (hasAceCard(dCard)) {//05.23 GameController 메소드를 여기로
+		if (hasAceCard(dCard)) {
 			aScreen.insureanceCheckScreen();
 			input = scan.input(1,2);
 		}
 	}
 	
-	private boolean hasAceCard(List<Card> dCard) { //05.23 GameController 메소드를 여기로.
+	private boolean hasAceCard(List<Card> dCard) { 
 		Card idx = dCard.get(0);
 		String cardNumber2 = idx.getNumber().toString();
 		return cardNumber2.equals("A");
@@ -241,7 +238,6 @@ public class Controller {
 	 */
 	private void checkInsuranceProcess() {
 		
-		issueChk = true;
 		insuranceCheck(dealer.getDealerCard());
 		if (input == 1 && dealer.cardSum(dealer.getDealerCard()) != 21) {
 			money.Insurance();
