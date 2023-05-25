@@ -128,11 +128,11 @@ public class Controller {
 	private void gameLoop() {
 		
 		while (stageChk == 1) {
-			if(splitCnt != 0) {
-			 cScreen.cardScreen(player.getPlayerCard(), dealer.sortCard(),
-					 player.cardSum(player.getPlayerCard()), money.getMoney(),
-					 money.getBetMoney());
-			}
+			if(issueChk==true && canDoubleDown==false) {
+				 cScreen.cardScreen(player.getPlayerCard(), dealer.sortCard(),
+						 player.cardSum(player.getPlayerCard()), money.getMoney(),
+						 money.getBetMoney());}
+				
 			// 첫 턴이면 선택지 3개, n턴 이라면 선택지 2개인 화면 출력
 			if (canDoubleDown == true) {
 				aScreen.firstChoiceScreen(); // 선택지 3개
@@ -150,8 +150,6 @@ public class Controller {
 					dealer.drawCard();
 				}
 				canDoubleDown = false;
-				cScreen.cardScreen(player.getPlayerCard(), dealer.sortCard(), player.cardSum(player.getPlayerCard()),
-						money.getMoney(), money.getBetMoney());
 
 				break;
 			case 2: // Stand
@@ -171,7 +169,7 @@ public class Controller {
 			}
 
 			// 플레이어나 딜러가 버스트하면 힛 못하도록 함
-			if (player.cardSum(player.getPlayerCard()) > 21 || dealer.cardSum(dealer.getDealerCard()) > 21) {
+			if (player.cardSum(player.getPlayerCard()) > 21) {
 				stageChk = 2;
 			}
 			if (stageChk >= 2) {
@@ -186,7 +184,11 @@ public class Controller {
 		}
 
 		// 숫자 비교 -- split 된 상태라면 숫자비교 ㄴㄴ 아니라면 숫자비교 ㄱㄱ
-		if (splitCnt > 0) {
+		if (splitCnt > 0 && player.cardSum(player.getPlayerCard())>17) {
+			aScreen.splitBustScreen();
+			splitResults.add(player.getPlayerCard());
+		}else if (splitCnt>0) {
+			aScreen.nextGameAScreen();
 			splitResults.add(player.getPlayerCard());
 		} else {
 			scoreCompare(player.getPlayerCard(), dealer.getDealerCard(), player.cardSum(player.getPlayerCard()),
