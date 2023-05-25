@@ -1,4 +1,5 @@
 package com.team21.blackjack.model;
+
 /**
  * 스플릿된 카드리스트에 카드를 저장하고 추가할 수 있도록 하는 클래스
  */

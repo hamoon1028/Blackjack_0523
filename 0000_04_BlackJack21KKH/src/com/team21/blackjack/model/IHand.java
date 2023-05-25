@@ -4,8 +4,8 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * 카드리스트의 점수를 계산하는 메소드를 포함하며
- * 자식 클래스에 draw메소드를 강제하는 Interface
+ * 플레이어, 딜러의 공통 기능인 카드받기(drawCard)를 구현시킴.
+ * default 메소드: 각 카드 리스트의 카드 합을 반환
  * @since 	23.05.22
  * @author 	HAMoon
  */
@@ -23,8 +23,8 @@ public interface IHand {
 	 * @return	각 카드점수의 합 int
 	 * 점수 값이 숫자인 경우 각 숫자를 점수로 계산
 	 * 점수 값이 J,Q,K 문자인 경우 10점을 점수로 계산
-	 * 점수 값이 A 문자인 경우 	-> 총 합에 11을 더해도 21 이하인 경우 -> 11점으로 계산
-	 * 						-> 총 합에 11을 더하면 21을 초과하는 경우 -> 1점으로 계산
+	 * 점수 값이 A 문자인 경우 	-> A를 제외한 카드 합에 11을 더해도 21 이하인 경우 -> 11점으로 계산
+	 * 						-> A를 제외한 카드 합에 11을 더하면 21을 초과하는 경우 -> 1점으로 계산
 	 */
 	default int cardSum(List<Card> eachList) {
 	    int sum = 0;

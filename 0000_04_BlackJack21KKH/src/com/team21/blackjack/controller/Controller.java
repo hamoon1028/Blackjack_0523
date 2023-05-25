@@ -62,13 +62,13 @@ public class Controller {
 
 		
 		// 스플릿 테스트를 위한 코드
-		if (money.getMoney() == 9000) {
-			player.drawCard();
-			dealer.drawCard();
-			 //player.drawCard();
-			player.getPlayerCard().add(player.getPlayerCard().get(0));
-			dealer.drawCard();
-		} else {
+//		if (money.getMoney() == 9000) {
+//			player.drawCard();
+//			dealer.drawCard();
+//			 //player.drawCard();
+//			player.getPlayerCard().add(player.getPlayerCard().get(0));
+//			dealer.drawCard();
+//		} else {
 		
 		// 딜러, 플레이어 한 장씩 드로우
 		player.drawCard();
@@ -76,7 +76,7 @@ public class Controller {
 		player.drawCard();
 		dealer.drawCard();
 
-}
+//}
 		// 카드 뽑기 결과를 반영한 카드창
 		cScreen.cardScreen(player.getPlayerCard(), dealer.sortCard(), player.cardSum(player.getPlayerCard()),
 				money.getMoney(), money.getBetMoney());
@@ -90,8 +90,9 @@ public class Controller {
 		}
 
 		// 스플릿 여부를 판단하고 처리하는 프로세스
-		while (player.compareCard(player.getPlayerCard().get(0), player.getPlayerCard().get(1)) && stageChk<=1) {
+		while (player.compareCard(player.getPlayerCard().get(0), player.getPlayerCard().get(1)) && stageChk<=1 && input!=2) {
 			checkSplitProcess();
+			
 
 		}
 
@@ -109,7 +110,6 @@ public class Controller {
 				player.drawCard(); // 플레이어 카드 드로우
 				splitList.clear(); // 스플릿카드는 새 걸로
 				gameLoop(); // 게임 플레이
-
 			}
 		
 
@@ -128,11 +128,11 @@ public class Controller {
 	private void gameLoop() {
 		
 		while (stageChk == 1) {
-			if(splitCnt != 0) {
-			 cScreen.cardScreen(player.getPlayerCard(), dealer.sortCard(),
-					 player.cardSum(player.getPlayerCard()), money.getMoney(),
-					 money.getBetMoney());
-			}
+			if(issueChk==true && canDoubleDown==false) {
+				 cScreen.cardScreen(player.getPlayerCard(), dealer.sortCard(),
+						 player.cardSum(player.getPlayerCard()), money.getMoney(),
+						 money.getBetMoney());}
+				
 			// 첫 턴이면 선택지 3개, n턴 이라면 선택지 2개인 화면 출력
 			if (canDoubleDown == true) {
 				aScreen.firstChoiceScreen(); // 선택지 3개
@@ -150,8 +150,6 @@ public class Controller {
 					dealer.drawCard();
 				}
 				canDoubleDown = false;
-				cScreen.cardScreen(player.getPlayerCard(), dealer.sortCard(), player.cardSum(player.getPlayerCard()),
-						money.getMoney(), money.getBetMoney());
 
 				break;
 			case 2: // Stand
@@ -171,7 +169,7 @@ public class Controller {
 			}
 
 			// 플레이어나 딜러가 버스트하면 힛 못하도록 함
-			if (player.cardSum(player.getPlayerCard()) > 21 || dealer.cardSum(dealer.getDealerCard()) > 21) {
+			if (player.cardSum(player.getPlayerCard()) > 21) {
 				stageChk = 2;
 			}
 			if (stageChk >= 2) {
@@ -186,7 +184,11 @@ public class Controller {
 		}
 
 		// 숫자 비교 -- split 된 상태라면 숫자비교 ㄴㄴ 아니라면 숫자비교 ㄱㄱ
-		if (splitCnt > 0) {
+		if (splitCnt > 0 && player.cardSum(player.getPlayerCard())>17) {
+			aScreen.splitBustScreen();
+			splitResults.add(player.getPlayerCard());
+		}else if (splitCnt>0) {
+			aScreen.nextGameAScreen();
 			splitResults.add(player.getPlayerCard());
 		} else {
 			scoreCompare(player.getPlayerCard(), dealer.getDealerCard(), player.cardSum(player.getPlayerCard()),
@@ -260,11 +262,11 @@ public class Controller {
 	 * @return 플레이어의 선택 	1 -> 스플릿 실행
 	 * 						2 -> 스플릿 미실행
 	 */
-	private int splitCheck() {
-		int input = 0;
+	private void splitCheck() {
+		
 		rScreen.splitCheckScreen();
 		input = scan.input(1,2);
-		return input;
+		
 	}
 
 	/**
@@ -280,7 +282,7 @@ public class Controller {
 	private void checkSplitProcess() {
 		issueChk = true;
 
-		if (splitCheck() == 1) {
+		if (input == 1) {
 			money.firstBet(saveFirstBet);
 			splitCnt++;
 			player.makeSplitCard();

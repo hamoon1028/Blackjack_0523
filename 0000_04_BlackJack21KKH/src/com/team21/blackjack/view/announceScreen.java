@@ -40,6 +40,18 @@ public class announceScreen {
 		System.out.println("==================================================\n");
 	}
 	
+	public void splitBustScreen() {
+		System.out.println("==================================================\n");
+		System.out.println("\t버스트 했습니다. 다음 스플릿게임이 진행됩니다 \n");
+		System.out.println("==================================================\n");
+	}
+	
+	public void nextGameAScreen() {
+		System.out.println("==================================================\n");
+		System.out.println("\t다음 스플릿 게임이 진행됩니다 \n");
+		System.out.println("==================================================\n");
+	}
+	
 	
 	public void insureanceCheckScreen() {
 		System.out.println("==================================================\n");
