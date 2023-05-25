@@ -232,7 +232,7 @@ public class Controller {
 	 * 플레이어가 Insurance를 선택했을 경우의 프로세스
 	 * @since 23.05.22
 	 * @author KHKim
-	 * 딜러의 카드 합이 21(블랙잭)이 아니라면 ->
+	 * 딜러의 카드 합이 21(블랙잭)이 아니라면 -> 
 	 */
 	private void checkInsuranceProcess() {
 		
