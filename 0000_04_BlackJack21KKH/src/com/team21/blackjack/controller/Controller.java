@@ -62,13 +62,13 @@ public class Controller {
 
 		
 		// 스플릿 테스트를 위한 코드
-//		if (money.getMoney() == 9000) {
-//			player.drawCard();
-//			dealer.drawCard();
-//			 //player.drawCard();
-//			player.getPlayerCard().add(player.getPlayerCard().get(0));
-//			dealer.drawCard();
-//		} else {
+		if (money.getMoney() == 9000) {
+			player.drawCard();
+			dealer.drawCard();
+			 //player.drawCard();
+			player.getPlayerCard().add(player.getPlayerCard().get(0));
+			dealer.drawCard();
+		} else {
 		
 		// 딜러, 플레이어 한 장씩 드로우
 		player.drawCard();
@@ -76,7 +76,7 @@ public class Controller {
 		player.drawCard();
 		dealer.drawCard();
 
-//}
+}
 		// 카드 뽑기 결과를 반영한 카드창
 		cScreen.cardScreen(player.getPlayerCard(), dealer.sortCard(), player.cardSum(player.getPlayerCard()),
 				money.getMoney(), money.getBetMoney());
@@ -90,10 +90,10 @@ public class Controller {
 		}
 
 		// 스플릿 여부를 판단하고 처리하는 프로세스
-		while (player.compareCard(player.getPlayerCard().get(0), player.getPlayerCard().get(1)) && stageChk<=1 && input!=2) {
+		while (player.compareCard(player.getPlayerCard().get(0), player.getPlayerCard().get(1)) && stageChk<=1) {
+			splitCheck();
 			checkSplitProcess();
-			
-
+			if(input==2) {break;}
 		}
 
 		// 기본 게임 진행
@@ -128,7 +128,7 @@ public class Controller {
 	private void gameLoop() {
 		
 		while (stageChk == 1) {
-			if(issueChk==true && canDoubleDown==false) {
+			if(issueChk==true) {
 				 cScreen.cardScreen(player.getPlayerCard(), dealer.sortCard(),
 						 player.cardSum(player.getPlayerCard()), money.getMoney(),
 						 money.getBetMoney());}
@@ -263,10 +263,8 @@ public class Controller {
 	 * 						2 -> 스플릿 미실행
 	 */
 	private void splitCheck() {
-		
 		rScreen.splitCheckScreen();
 		input = scan.input(1,2);
-		
 	}
 
 	/**
@@ -289,8 +287,6 @@ public class Controller {
 			splitList = player.getSplitCardStart();
 			
 			player.drawCard();
-			cScreen.cardScreen(player.getPlayerCard(), dealer.sortCard(), player.cardSum(player.getPlayerCard()),
-					money.getMoney(), money.getBetMoney());
 
 		}
 
