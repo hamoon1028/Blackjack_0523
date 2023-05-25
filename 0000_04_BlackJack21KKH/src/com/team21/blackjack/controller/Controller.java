@@ -90,8 +90,9 @@ public class Controller {
 		}
 
 		// 스플릿 여부를 판단하고 처리하는 프로세스
-		while (player.compareCard(player.getPlayerCard().get(0), player.getPlayerCard().get(1)) && stageChk<=1) {
+		while (player.compareCard(player.getPlayerCard().get(0), player.getPlayerCard().get(1)) && stageChk<=1 && input!=2) {
 			checkSplitProcess();
+			
 
 		}
 
@@ -109,7 +110,6 @@ public class Controller {
 				player.drawCard(); // 플레이어 카드 드로우
 				splitList.clear(); // 스플릿카드는 새 걸로
 				gameLoop(); // 게임 플레이
-
 			}
 		
 
@@ -262,11 +262,11 @@ public class Controller {
 	 * @return 플레이어의 선택 	1 -> 스플릿 실행
 	 * 						2 -> 스플릿 미실행
 	 */
-	private int splitCheck() {
-		int input = 0;
+	private void splitCheck() {
+		
 		rScreen.splitCheckScreen();
 		input = scan.input(1,2);
-		return input;
+		
 	}
 
 	/**
@@ -282,7 +282,7 @@ public class Controller {
 	private void checkSplitProcess() {
 		issueChk = true;
 
-		if (splitCheck() == 1) {
+		if (input == 1) {
 			money.firstBet(saveFirstBet);
 			splitCnt++;
 			player.makeSplitCard();
